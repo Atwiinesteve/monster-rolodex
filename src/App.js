@@ -20,13 +20,9 @@ class App extends Component {
 					<p>
 						Welcome { this.state.name } to React Class Components.
 					</p>
-					<a
-						className="App-link"
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer">
-						Learn React
-					</a>
+					<button onClick={() => {
+            this.setState({ name: "Atwiine "})
+          }} >Change Name</button>
 				</header>
 			</div>
 		);
