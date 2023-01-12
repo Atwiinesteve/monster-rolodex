@@ -21,10 +21,13 @@ class App extends Component {
 			],
 		};
 
-    // users
-    this.state = {
-      usersList: []
-    };
+		// users
+		this.state = {
+			users: [],
+			searchField: ""
+		};
+
+	
 	};
 
   // Mounting a Component - Component first renders
@@ -34,7 +37,7 @@ class App extends Component {
 			.then((users) =>
 				this.setState(
 					() => {
-						return { usersList: users };
+						return { users: users };
 					},
 					() => {
 						console.log(this.state);
@@ -45,18 +48,23 @@ class App extends Component {
 
   // rendering the UI Component
 	render() {
+
+		const filteredUsers = this.state.users.filter((user) => {
+			return user.name.toLocaleLowerCase().includes(this.state.searchField);
+		});
+
 		return (
 			<div className="App">
 				{/* =================================== */}
 
 				{/* <header className="App-header">
-					<p>
-						Welcome { this.state.name } to React Class Components.
-					</p>
-					<button onClick={() => {
-            this.setState({ name: "Atwiine "})
-          }} >Change Name</button>
-				</header> */}
+						<p>
+							Welcome { this.state.name } to React Class Components.
+						</p>
+						<button onClick={() => {
+							this.setState({ name: "Atwiine "})
+						}} >Change Name</button>
+					</header> */}
 
 				{/* ================================== */}
 
@@ -67,14 +75,20 @@ class App extends Component {
 
 				{/* ================================== */}
 
-        {/* Fetching Data from an API */}
-        { this.state.usersList.map((user) => {
-          return (
-						<div key={user.id} className="users">
-							<h3>{user.name}</h3>
-						</div>
-					);
-        }) }
+				{/* Adding Input element */}
+				<input type="search" className="search" placeholder="Search Users" onChange={(event) =>{
+					const searchField = event.target.value.toLocaleLowerCase()
+					this.setState(() => { return { searchField } })
+				}} />
+
+				{/* Fetching Data from an API */}
+				{ filteredUsers.map((user) => {
+				return (
+							<div key={user.id} className="users">
+								<h3>{user.name}</h3>
+							</div>
+						);
+				}) }
 			</div>
 		);
 	}
