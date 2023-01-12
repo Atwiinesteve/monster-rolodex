@@ -46,11 +46,20 @@ class App extends Component {
 			);
   };
 
+	// onSearchChange function
+	onSearchChange = (event) => {
+		const searchField = event.target.value.toLocaleLowerCase()
+		this.setState(() => { return { searchField } })
+	}   
+
   // rendering the UI Component
 	render() {
 
-		const filteredUsers = this.state.users.filter((user) => {
-			return user.name.toLocaleLowerCase().includes(this.state.searchField);
+		const { users, searchField } = this.state;
+		const { onSearchChange } = this;
+
+		const filteredUsers = users.filter((user) => {
+			return user.name.toLocaleLowerCase().includes(searchField);
 		});
 
 		return (
@@ -76,10 +85,7 @@ class App extends Component {
 				{/* ================================== */}
 
 				{/* Adding Input element */}
-				<input type="search" className="search" placeholder="Search Users" onChange={(event) =>{
-					const searchField = event.target.value.toLocaleLowerCase()
-					this.setState(() => { return { searchField } })
-				}} />
+				<input type="search" className="search" placeholder="Search Users" onChange={ onSearchChange } />
 
 				{/* Fetching Data from an API */}
 				{ filteredUsers.map((user) => {
