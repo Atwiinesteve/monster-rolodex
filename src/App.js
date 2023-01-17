@@ -61,6 +61,9 @@ class App extends Component {
 			<div className="App">
 				{/* =================================== */}
 
+				<h1 className="app-title">monsters rolodex</h1>
+				{/* =================================== */}
+
 				{/* <header className="App-header">
 						<p>
 							Welcome { this.state.name } to React Class Components.
