@@ -1,14 +1,15 @@
 // importing modules.
 import React, { Component } from "react";
 import "./App.css";
+import CardList from "./components/CardList.jsx";
+import SearchBox from "./components/SearchBox";
 
 class App extends Component {
-
 	constructor() {
 		super();
 
 		// user
-		this.state = { name: "Stephen" }
+		this.state = { name: "Stephen" };
 
 		// monsters
 		this.state = {
@@ -24,37 +25,31 @@ class App extends Component {
 		// users
 		this.state = {
 			users: [],
-			searchField: ""
+			searchField: "",
 		};
+	}
 
-	
-	};
-
-  // Mounting a Component - Component first renders
-  componentDidMount() {
-    fetch("https://jsonplaceholder.typicode.com/users")
+	// Mounting a Component - Component first renders
+	componentDidMount() {
+		fetch("https://jsonplaceholder.typicode.com/users")
 			.then((response) => response.json())
 			.then((users) =>
-				this.setState(
-					() => {
-						return { users: users };
-					},
-					() => {
-						console.log(this.state);
-					},
-				),
+				this.setState(() => {
+					return { users: users };
+				}),
 			);
-  };
+	}
 
 	// onSearchChange function
 	onSearchChange = (event) => {
-		const searchField = event.target.value.toLocaleLowerCase()
-		this.setState(() => { return { searchField } })
-	}   
+		const searchField = event.target.value.toLocaleLowerCase();
+		this.setState(() => {
+			return { searchField };
+		});
+	};
 
-  // rendering the UI Component
+	// rendering the UI Component
 	render() {
-
 		const { users, searchField } = this.state;
 		const { onSearchChange } = this;
 
@@ -85,19 +80,30 @@ class App extends Component {
 				{/* ================================== */}
 
 				{/* Adding Input element */}
-				<input type="search" className="search" placeholder="Search Users" onChange={ onSearchChange } />
+				<SearchBox
+					type="search"
+					className="search-box"
+					placeholder="Search Users"
+					onSearchHandler={onSearchChange}
+				/>
 
 				{/* Fetching Data from an API */}
-				{ filteredUsers.map((user) => {
+				{/* { filteredUsers.map((user) => {
 				return (
 							<div key={user.id} className="users">
 								<h3>{user.name}</h3>
 							</div>
 						);
-				}) }
+				}) } */}
+
+				{/* ================================== */}
+
+				{/* Rendering components */}
+				<CardList users={filteredUsers} />
 			</div>
 		);
 	}
 }
 
+// exporting app.
 export default App;
